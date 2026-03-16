@@ -10,7 +10,8 @@ class Page {
 	
 	Page()
 	{
-		index.put(PageType.HOME, "/screen/home.fxml");
+		//screen
+		index.put(PageType.HOME, "/fxml/screen/home.fxml");
 	}
 
 	public String getPath(PageType type) {
