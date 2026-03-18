@@ -12,6 +12,7 @@ class Page {
 	{
 		//screen
 		index.put(PageType.HOME, "/fxml/screen/home.fxml");
+		index.put(PageType.SEARCHPAGE, "/fxml/screen/search.fxml");
 	}
 
 	public String getPath(PageType type) {

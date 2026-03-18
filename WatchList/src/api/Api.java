@@ -65,16 +65,33 @@ public class Api{
 	        {
 	        	JSONObject fs = result.getJSONObject(i);
 	        	
+	        	System.out.println(fs);
+	        	
+	        	String year = "not found";
+	        	String image = "";
+	        	
+	        	if(fs.has("year"))
+	        	{
+	        		year = String.valueOf(fs.getInt("year"));
+	        	}
+	        	if(fs.has("image") && !fs.isNull("image"))
+	        	{
+	        		image = fs.getString("image");
+	        	}
+	        
 	        	Media m = new Media(
 	        			fs.getString("id"),
 	        			fs.getString("name"),
 	        			fs.getString("description"),
 	        			String.valueOf(fs.getInt("rank")),
-	        			fs.getString("image"),
-	        			String.valueOf(fs.getInt("year"))
+	        			image,
+	        			year
 	        		);
 	        	
-	        	MediaList.getInstance().addSearchMedia(m);
+	        	if(fs.has("image") && !fs.isNull("image"))
+	        	{
+		        	MediaList.getInstance().addSearchMedia(m);
+	        	}
 	        }
 
 	        
@@ -97,4 +114,4 @@ public class Api{
 }
 
 
-// https://xmdbapi.com/docs
+//https://xmdbapi.com/docs

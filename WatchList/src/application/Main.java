@@ -20,10 +20,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
     	
+    	MediaList.init();
+
     	Manager.init(primaryStage);  // on initialise le root manager
     	FileManager.init();
     	Api.init();
-    	MediaList.init();
    
     	FileManager.readSettings();
     

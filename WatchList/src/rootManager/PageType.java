@@ -1,5 +1,6 @@
 package rootManager;
 
 public enum PageType {
-	HOME
+	HOME,
+	SEARCHPAGE
 }

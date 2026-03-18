@@ -19,12 +19,19 @@ public class MediaList {
 		return searchMedia;
 	}
 
-
+	public void clearSearchMedia()
+	{
+		searchMedia.clear();
+	}
 
 	public List<Media> getMyMedia() {
 		return myMedia;
 	}
 	
+	public void clearMyMedia()
+	{
+		myMedia.clear();
+	}
 	public void addSearchMedia(Media m)
 	{
 		searchMedia.add(m);
