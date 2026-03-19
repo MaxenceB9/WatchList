@@ -12,8 +12,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import model.Preview;
 import model.SearchPreview;
+import rootManager.Manager;
+import rootManager.PageType;
 
 
 public class SearchControl {
@@ -25,6 +26,9 @@ public class SearchControl {
 	
 	@FXML
 	private Button searchButton;
+	
+	@FXML
+	private Button backButton;
 	
 	@FXML
 	public void initialize()
@@ -62,5 +66,12 @@ public class SearchControl {
 	            });		        
 		    }).start(); 
 		}
+	}
+	
+	
+	public void goBack()
+	{
+		Manager.getInstance();
+		Manager.setPage(PageType.HOME);
 	}
 }

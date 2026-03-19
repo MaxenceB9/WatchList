@@ -2,11 +2,10 @@ package model;
 
 import api.Media;
 import api.MediaList;
+import data.FileManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,8 +16,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import rootManager.Manager;
-import rootManager.PageType;
+
 
 public class SearchPreview extends HBox {
 	private String Title;
@@ -68,6 +66,8 @@ public class SearchPreview extends HBox {
 				{
 					MediaList.getInstance().addMyMedia(m);	
 					addButton.setText("Added");
+					
+					FileManager.getInstance().update(MediaList.getInstance().toMap(), "myMedia");
 				}
 			}
 		});

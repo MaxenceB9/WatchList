@@ -1,7 +1,9 @@
 package api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MediaList {	
 	private static MediaList instance;
@@ -45,5 +47,23 @@ public class MediaList {
 	public static MediaList getInstance()
 	{
 		return instance;
+	}	
+	
+	@Override
+	public String toString() {
+		return "MediaList (myMedia=" + myMedia + ")\n";
+	}
+
+	public Map<String, String> toMap() // convertion de la liste mymedia en Map java
+	{
+		Map<String,String> data = new HashMap<String, String>();
+		
+		
+		for(Media entity : this.getMyMedia())
+		{
+			data.put("MEDIA-" + entity.getId(), entity.toString());
+		}
+		
+		return data;
 	}
 }

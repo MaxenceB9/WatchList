@@ -12,9 +12,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import retrofit2.*;
-import rootManager.Manager;
-
 
 public class Api{
 	private static Api instance;
@@ -42,26 +39,27 @@ public class Api{
 	
 	public void request(String query) throws IOException, InterruptedException
 	{
-		List<Media> res = new ArrayList<Media>();
-		String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
+		List<Media> res = new ArrayList<Media>(); //création d'une liste pour stocker les Media reçu.
+		
+		String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8); // on encore le query en UTF-8
 		String url = String.format("https://xmdbapi.com/api/v1/search?q=%s&limit=%d&apiKey=%s", encodedQuery, this.RateLimit, this.api_key);
 		
-		try(HttpClient client = HttpClient.newHttpClient())
+		try(HttpClient client = HttpClient.newHttpClient()) // on crée un client http
 		{
-	        HttpRequest request = HttpRequest.newBuilder()
+	        HttpRequest request = HttpRequest.newBuilder() // requette http
 	                .uri(URI.create(url.trim()))
 	                .GET()
 	                .build();
 	        
-	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); //reponse
 	        
-	        String body = response.body();
+	        String body = response.body(); // on recupère le corp de la réponse
 	        
-	        JSONObject bodypars = new JSONObject(body);
-	        JSONArray result = bodypars.getJSONArray("results");  
+	        JSONObject bodypars = new JSONObject(body); // on transofrme le string en objet json
+	        JSONArray result = bodypars.getJSONArray("results");  //on transform l'objet en tableau
 	        
 	        
-	        for(int i = 0; i < result.length(); i++)
+	        for(int i = 0; i < result.length(); i++) // on crée les media en fonction du res
 	        {
 	        	JSONObject fs = result.getJSONObject(i);
 	        	
@@ -70,11 +68,11 @@ public class Api{
 	        	String year = "not found";
 	        	String image = "";
 	        	
-	        	if(fs.has("year"))
+	        	if(fs.has("year")) // on recup l'année
 	        	{
 	        		year = String.valueOf(fs.getInt("year"));
 	        	}
-	        	if(fs.has("image") && !fs.isNull("image"))
+	        	if(fs.has("image") && !fs.isNull("image")) //on récup l'image
 	        	{
 	        		image = fs.getString("image");
 	        	}
@@ -86,17 +84,15 @@ public class Api{
 	        			String.valueOf(fs.getInt("rank")),
 	        			image,
 	        			year
-	        		);
+	        		); // on crée le nouveau media
 	        	
-	        	if(fs.has("image") && !fs.isNull("image"))
+	        	if(fs.has("image") && !fs.isNull("image")) // il faut une image pour que le media soit ajouter
 	        	{
-		        	MediaList.getInstance().addSearchMedia(m);
+		        	MediaList.getInstance().addSearchMedia(m); //on ajoute le media à la liste
 	        	}
 	        }
-
 	        
-	        
-	       for(Media m : res)
+	       for(Media m : res) // on ajoute les media restant a la liste
 	       {
 	    	   MediaList.getInstance().addSearchMedia(m);
 	       }
@@ -105,8 +101,15 @@ public class Api{
 	}
 	
 	
-	
-	
+	public int getRateLimit() {
+		return RateLimit;
+	}
+
+
+	public void setRateLimit(int rateLimit) {
+		RateLimit = rateLimit >= 5 ? RateLimit : 5 ;
+	}
+
 	public static Api getInstance() {
         return instance;
     }

@@ -1,18 +1,12 @@
 package application;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import api.Api;
-import api.Media;
 import api.MediaList;
 import data.FileManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import rootManager.Manager;
 import rootManager.ModalType;
-import rootManager.PageType;
 
 public class Main extends Application {
 
@@ -21,13 +15,17 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
     	
     	MediaList.init();
+    	
+    	Api.init();
+
+    	FileManager.init();
+    	FileManager.getInstance().readFile("settings");
+    	FileManager.getInstance().readFile("myMedia");
+    	
 
     	Manager.init(primaryStage);  // on initialise le root manager
-    	FileManager.init();
-    	Api.init();
-   
-    	FileManager.readSettings();
-    
+    	
+    	
     	if(!Api.getInstance().isApiKeyExist())
     	{
     		Manager.openModal(ModalType.API_POPUP, "API KEY");

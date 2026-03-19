@@ -1,29 +1,19 @@
 package controller.page;
-/*
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import rootManager.Manager;
 import rootManager.PageType;
-*/
-
 import javafx.application.Platform;
-
 import java.io.IOException;
 import java.util.List;
-
 import api.Api;
 import api.Media;
 import api.MediaList;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import model.Preview;
-import rootManager.Manager;
-import rootManager.PageType;
 
 public class HomeControl {
 		
@@ -41,7 +31,7 @@ public class HomeControl {
 		{
 			FlowPane.setPrefWrapLength(750);
 			FlowPane.getChildren().clear();
-		    
+			
 			if(!MediaList.getInstance().getMyMedia().isEmpty())
 			{
 			    new Thread(() -> {		            
@@ -61,7 +51,10 @@ public class HomeControl {
 		
 		public void search() {
 		    String query = searchBar.getText();
-		    
+		    if(!MediaList.getInstance().getSearchMedia().isEmpty())
+		    {
+		    	MediaList.getInstance().getSearchMedia().clear();
+		    }
 		    try {
 				Api.getInstance().request(query);
 			} catch (IOException | InterruptedException e) {

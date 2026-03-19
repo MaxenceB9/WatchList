@@ -1,18 +1,16 @@
 package data;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.Reader;
+import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import api.Api;
+import api.Media;
+import api.MediaList;
 
 
 public class FileManager {
@@ -33,45 +31,99 @@ public class FileManager {
 		pathVerify();
 	}
 	
-	public void saveFile(Map<String, String> data, String filename)
+	public void saveFile(Map<String, String> data, String filename) // a recoder
 	{
-		JSONObject jo = new JSONObject();
-		for(Map.Entry<String, String> entry : data.entrySet())
-		{
-			jo.put(entry.getKey(), entry.getValue());
-		}
-		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
 		try {
-			File file = new File(path + File.separator + filename + ".json");
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(jo.toString());
-			
-			bw.close();
-			fw.close();
-			
-		}catch (Exception e) {
-			System.out.println("Error: " + e);
-		}
+	        File file = new File(path + File.separator + filename + ".json");
+	        
+	        mapper.writeValue(file, data);
+	        
+	        System.out.println("Fichier sauvegardé avec succès : " + file.getAbsolutePath());
+	        
+	    } catch (IOException e) {
+	        System.err.println("Erreur lors de l'écriture du fichier : " + e.getMessage());
+	    }
 	}
 	
-	public static void readSettings() {
-	    File file = new File(path + File.separator + "settings.json");
-	    if (!file.exists()) return;
-
+	public void readFile(String filename)
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, String> data = new HashMap<>();		
+		
+		try {
+			File file = new File(path + File.separator + filename +".json");
+			if(!file.exists()) return;
+			
+			data = mapper.readValue(file, new TypeReference<Map<String, String>>(){});
+			
+			switch(filename)
+			{
+			case "settings":
+				Api.getInstance().setApi_key(data.get("APIKEY"));
+				break;
+			case "myMedia":
+				for(Map.Entry<String, String> m : data.entrySet())
+				{
+					String value = m.getValue();
+					
+					String id = value.split("id=")[1].split(",")[0];
+					String title = value.split("Title=")[1].split(",")[0];
+					String desc = value.split("Desc=")[1].split(",")[0];;
+					String score = value.split("Score=")[1].split(",")[0];;
+					String uri = value.split("PosterUri=")[1].split(",")[0];;
+					String year = value.split("year=")[1].replace(")", "").trim();;
+					
+					Media media = new Media(id,title,desc,score,uri,year);
+					
+					MediaList.getInstance().addMyMedia(media);
+				}
+				break;
+			}
+			
+			
+		}catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+	}
+	
+	public void update(Map<String, String> data, String filename) {
+		File file = new File(path + File.separator + filename + ".json");
+		if(!file.exists()) {
+			saveFile(data,filename);
+			return;
+		}
+		
+		String content = "";
+		
+		Map<String, String> newData = new HashMap<>();
+		
 	    try {            
-	        String content = Files.readString(file.toPath());
+	        content = Files.readString(file.toPath());
 	        JSONObject jo = new JSONObject(content);
 	        
-	        if (jo.has("APIKEY")) {
-	            Api.getInstance().setApi_key(jo.getString("APIKEY"));
+	        for(String key : jo.keySet())
+	        {
+	        	newData.put(key, jo.optString(key));
 	        }
+			
+	        for(Map.Entry<String, String> entry : data.entrySet()){
+	        	if(!newData.containsKey(entry.getKey()))
+	        	{
+	        		newData.put(entry.getKey(), entry.getValue());
+	        	}
+	        }
+	        
+			saveFile(newData, filename);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	}
 	
-	//public void update(Map<String, String> data, String filename) {}
+	
+	
 	private void pathVerify()
 	{
 		File folder = new File(path);

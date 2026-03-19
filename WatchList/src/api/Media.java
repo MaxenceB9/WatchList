@@ -1,5 +1,7 @@
 package api;
 
+import org.json.JSONObject;
+
 public class Media {
 	private String id;
 	private String Title;
@@ -51,10 +53,19 @@ public class Media {
 
 	@Override
 	public String toString() {
-		return "Media (id=" + id + ", Title=" + Title + ", Desc=" + Desc + ", Score=" + Score + ", PosterUri="
+		return "Media(id=" + id + ", Title=" + Title + ", Desc=" + Desc + ", Score=" + Score + ", PosterUri="
 				+ PosterUri + ", year=" + year + ")\n";
 	}
 	
-	
+	public JSONObject toJsonObject() {
+	    JSONObject jo = new JSONObject();
+	    jo.put("id", this.id);
+	    jo.put("Title", this.Title);
+	    jo.put("Desc", this.Desc);
+	    jo.put("Score", this.Score);
+	    jo.put("PosterUri", this.PosterUri);
+	    jo.put("Year", this.year);
+	    return jo;
+	}
 	
 }
