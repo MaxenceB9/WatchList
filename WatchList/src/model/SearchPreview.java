@@ -21,7 +21,7 @@ import javafx.scene.text.FontWeight;
 public class SearchPreview extends HBox {
 	private String Title;
 	private String Desc;
-	private String Score;
+	private String plot;
 	private String PosterUri;
 	private String year;
 	
@@ -31,11 +31,11 @@ public class SearchPreview extends HBox {
 		super();
 		Title = m.getTitle();
 		Desc = m.getDesc();
-		Score = m.getScore();
 		PosterUri = m.getPosterUri();
 		this.year = m.getYear();
 		this.witdh = witdh;
 		this.height = height;
+		this.plot = m.getPlot();
 		
 		VBox TextContent = new VBox();
 		
@@ -52,7 +52,8 @@ public class SearchPreview extends HBox {
 		Label text = new Label(this.Title + " (" + this.year + ")");
 		text.setFont(Font.font("System", FontWeight.BOLD, 18));
 		
-		Label txtDesc = new Label(this.Desc);
+		Label txtDesc = new Label(this.plot.isEmpty() ? this.Desc : this.plot + "\n" + this.Desc);
+		txtDesc.setMaxWidth(this.witdh - image.getFitWidth());
 		txtDesc.setFont(Font.font("System", FontWeight.NORMAL, 14));
 
 		
@@ -72,7 +73,7 @@ public class SearchPreview extends HBox {
 			}
 		});
 		
-		
+
 		this.setPrefWidth(this.witdh);
 		this.setPrefHeight(this.height);
 		this.setMaxHeight(this.height);

@@ -64,18 +64,21 @@ public class FileManager {
 				Api.getInstance().setApi_key(data.get("APIKEY"));
 				break;
 			case "myMedia":
+			
 				for(Map.Entry<String, String> m : data.entrySet())
 				{
 					String value = m.getValue();
 					
 					String id = value.split("id=")[1].split(",")[0];
 					String title = value.split("Title=")[1].split(",")[0];
-					String desc = value.split("Desc=")[1].split(",")[0];;
+					String desc = value.split("Desc=")[1].split(",")[0];
+					String plot = value.split("plot=")[1].split(",")[0];
+					String type = value.split("type=")[1].split(",")[0];
 					String score = value.split("Score=")[1].split(",")[0];;
-					String uri = value.split("PosterUri=")[1].split(",")[0];;
+					String uri = value.split("PosterUri=")[1].split(",")[0];
 					String year = value.split("year=")[1].replace(")", "").trim();;
 					
-					Media media = new Media(id,title,desc,score,uri,year);
+					Media media = new Media(id,title,desc,plot, type,score,uri,year);
 					
 					MediaList.getInstance().addMyMedia(media);
 				}

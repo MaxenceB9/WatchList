@@ -3,6 +3,8 @@ package controller.popup;
 import javafx.scene.control.TextField;
 import rootManager.Manager;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,16 @@ public class APIpopupControl {
 	
 	public void LinkClick()
 	{
+		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 		
+		if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE))
+		{
+			try {
+				desktop.browse(new URI("https://xmdbapi.com/api-key"));
+			}catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		}
 	}
 	
 	

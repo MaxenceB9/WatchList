@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -27,6 +28,8 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
+                    <MenuItem fx:id="settings" mnemonicParsing="false" onAction="#openSettings" text="Settings" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>

@@ -34,7 +34,7 @@ public class Manager {
 		setPage(DEFAULT);
 	}
 	
-	public static void setPage(PageType PT) // changement de page
+	public void setPage(PageType PT) // changement de page
 	{	
 		try {
             String PATH = PAGE.getPath(PT); // recherche de la page
@@ -65,7 +65,7 @@ public class Manager {
         }
     }
 	
-	public static void openModal(ModalType MT, String title) throws IOException
+	public void openModal(ModalType MT, String title) throws IOException
 	{
 		try {
 			String PATH = MODAL.getPath(MT);

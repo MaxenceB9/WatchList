@@ -22,13 +22,12 @@ public class Main extends Application {
     	FileManager.getInstance().readFile("settings");
     	FileManager.getInstance().readFile("myMedia");
     	
-
     	Manager.init(primaryStage);  // on initialise le root manager
-    	
+
     	
     	if(!Api.getInstance().isApiKeyExist())
     	{
-    		Manager.openModal(ModalType.API_POPUP, "API KEY");
+    		Manager.getInstance().openModal(ModalType.API_POPUP, "API KEY");
     	}
     	
     	primaryStage.setTitle("Watchlist");

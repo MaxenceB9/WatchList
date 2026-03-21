@@ -12,6 +12,8 @@ class Modal {
 	{
 		//screen
 		index.put(ModalType.API_POPUP, "/fxml/popup/api_popup_init.fxml");
+		index.put(ModalType.SETTINGS, "/fxml/popup/settings.fxml");
+
 	}
 
 	public String getPath(ModalType type) {

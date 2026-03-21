@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class MediaList {	
 	private static MediaList instance;
 	
-	private List<Media> searchMedia = new ArrayList<Media>();
+	private ObservableList<Media> searchMedia = FXCollections.observableArrayList();
 	private List<Media> myMedia = new ArrayList<Media>();
 
 	
@@ -17,7 +20,7 @@ public class MediaList {
 		instance = new MediaList();	
 	}	
 	
-	public List<Media> getSearchMedia() {
+	public ObservableList<Media> getSearchMedia() {
 		return searchMedia;
 	}
 
