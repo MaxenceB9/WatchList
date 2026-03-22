@@ -57,13 +57,14 @@ public class SearchPreview extends HBox {
 		txtDesc.setFont(Font.font("System", FontWeight.NORMAL, 14));
 
 		
-		Button addButton = new Button((!MediaList.getInstance().getMyMedia().contains(m)) ? "Add" : "Already add");
+		Button addButton = new Button("Add");
+	
 		addButton.setPrefWidth(witdh / 2);
 		addButton.setPrefHeight(20);
 		addButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				if(!MediaList.getInstance().getMyMedia().contains(m))
+				if(!MediaList.getInstance().contain(MediaList.getInstance().getMyMedia(), m))
 				{
 					MediaList.getInstance().addMyMedia(m);	
 					addButton.setText("Added");

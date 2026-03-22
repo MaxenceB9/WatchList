@@ -13,7 +13,8 @@ public class MediaList {
 	
 	private ObservableList<Media> searchMedia = FXCollections.observableArrayList();
 	private List<Media> myMedia = new ArrayList<Media>();
-
+	private List<Media> tvMedia = new ArrayList<Media>();
+	private List<Media> movieMedia = new ArrayList<Media>();
 	
 	public static void init()
 	{
@@ -51,6 +52,42 @@ public class MediaList {
 	{
 		return instance;
 	}	
+	
+	
+	public boolean contain(List<Media> data, Media media)
+	{
+		for(Media m : data)
+		{
+			if(m.getId() == media.getId())
+			{
+				return true;
+			}
+		}
+		
+		
+		return false;
+	}
+	
+	
+	public List<Media> getTvMedia() {
+		return tvMedia;
+	}
+
+	public void setTvMedia(Media tvMedia) {
+		this.tvMedia.add(tvMedia);
+	}
+
+	public List<Media> getMovieMedia() {
+		return movieMedia;
+	}
+
+	public void setMovieMedia(Media movieMedia) {
+		this.movieMedia.add(movieMedia);
+	}
+	
+	
+	
+	
 	
 	@Override
 	public String toString() {

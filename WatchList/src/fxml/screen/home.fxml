@@ -16,8 +16,9 @@
    <left>
       <VBox prefHeight="378.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Mes series" />
-            <Button mnemonicParsing="false" text="Mes Films" />
+            <Button mnemonicParsing="false" onAction="#showAll" text="All media" />
+            <Button mnemonicParsing="false" onAction="#showSerie" text="My series" />
+            <Button mnemonicParsing="false" onAction="#showMovie" text="My movie" />
          </children>
       </VBox>
    </left>

@@ -37,11 +37,9 @@ public class FileManager {
 		mapper.enable(com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT);
 		try {
 	        File file = new File(path + File.separator + filename + ".json");
-	        
+
 	        mapper.writeValue(file, data);
-	        
-	        System.out.println("Fichier sauvegardé avec succès : " + file.getAbsolutePath());
-	        
+	        	        
 	    } catch (IOException e) {
 	        System.err.println("Erreur lors de l'écriture du fichier : " + e.getMessage());
 	    }
