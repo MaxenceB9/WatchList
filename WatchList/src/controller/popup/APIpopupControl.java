@@ -10,6 +10,7 @@ import java.util.Map;
 
 import api.Api;
 import data.FileManager;
+import data.Settings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -29,18 +30,16 @@ public class APIpopupControl {
 	public void SaveClick()
 	{
 		Map<String, String> data = new HashMap<>();
-		data.put("APIKEY", input.getText());
-		
-		
-		Api.getInstance().setApi_key(input.getText());
+		data.put("ApiKey", input.getText());
+		data.put("Lang", Settings.getInstance().getLang());
+		data.put("SavePoster", String.format("%s", Settings.getInstance().isSavePoster()));
+
+		Settings.getInstance().setApiKey(input.getText());
 		
 		FileManager.getInstance().saveFile(data, "settings");
 		
-		if(!Api.getInstance().getApi_key().isEmpty())
-		{
-			Manager.closeModal();
-		}
-	
+		
+		Manager.closeModal();
 	}
 	
 	public void LinkClick()

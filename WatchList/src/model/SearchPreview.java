@@ -1,8 +1,11 @@
 package model;
 
-import api.Media;
-import api.MediaList;
+import java.net.MalformedURLException;
+
 import data.FileManager;
+import data.Media;
+import data.MediaList;
+import data.Settings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,6 +19,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 
 public class SearchPreview extends HBox {
@@ -52,20 +56,34 @@ public class SearchPreview extends HBox {
 		Label text = new Label(this.Title + " (" + this.year + ")");
 		text.setFont(Font.font("System", FontWeight.BOLD, 18));
 		
-		Label txtDesc = new Label(this.plot.isEmpty() ? this.Desc : this.plot + "\n" + this.Desc);
-		txtDesc.setMaxWidth(this.witdh - image.getFitWidth());
+		Label txtDesc = new Label(this.plot.isEmpty() ? this.Desc : this.plot + "\n\n" + this.Desc);
+		txtDesc.setPrefWidth(this.witdh - image.getFitWidth());
+		txtDesc.setWrapText(true);
 		txtDesc.setFont(Font.font("System", FontWeight.NORMAL, 14));
+		txtDesc.setTextAlignment(TextAlignment.JUSTIFY);
 
 		
 		Button addButton = new Button("Add");
 	
-		addButton.setPrefWidth(witdh / 2);
+		addButton.setPrefWidth(witdh / 4);
 		addButton.setPrefHeight(20);
 		addButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				if(!MediaList.getInstance().contain(MediaList.getInstance().getMyMedia(), m))
 				{
+					if(Settings.getInstance().isSavePoster())
+					{
+						String path = null;
+						try {
+							path = FileManager.getInstance().DownloadPoster(m.getPosterUri(), m.getId());
+						} catch (MalformedURLException e) {
+							e.printStackTrace();
+						}
+						m.setPosterUri(path);
+					}
+					
+					
 					MediaList.getInstance().addMyMedia(m);	
 					addButton.setText("Added");
 					
@@ -92,6 +110,4 @@ public class SearchPreview extends HBox {
 		this.getChildren().add(TextContent);
 		
 	}
-	
-
 }

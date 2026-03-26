@@ -14,25 +14,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import data.Media;
+import data.MediaList;
+import data.Settings;
+
 public class Api {
 	private static Api instance;
-	private String api_key;
 	private int RateLimit = 5;
 
 	public static void init() {
 		instance = new Api();
-	}
-
-	public String getApi_key() {
-		return api_key;
-	}
-
-	public void setApi_key(String api_key) {
-		this.api_key = api_key;
-	}
-
-	public boolean isApiKeyExist() {
-		return api_key != null && !api_key.trim().isEmpty();
 	}
 
 	public CompletableFuture<Void> request(String query) { // la requette est asynchrone
@@ -41,7 +32,7 @@ public class Api {
 
 			String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
 			String url = String.format("https://xmdbapi.com/api/v1/search?q=%s&limit=%d&apiKey=%s", encodedQuery,
-					this.RateLimit, this.api_key);
+					this.RateLimit, Settings.getInstance().getApiKey());
 
 			try (HttpClient client = HttpClient.newHttpClient()) // on crée un client http
 			{
@@ -72,19 +63,11 @@ public class Api {
 						}
 
 						List<String> movie = null;
-						try {
-							movie = getMoreData_Movie(fs.getString("id"));
-						} catch (JSONException | IOException | InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						movie = getMoreData_Movie(fs.getString("id"));
+
 						List<String> serie = null;
-						try {
-							serie = getMoreData_Serie(fs.getString("id"));
-						} catch (JSONException | IOException | InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						serie = getMoreData_Serie(fs.getString("id"));
+						
 
 						Media m = new Media(
 								fs.getString("id"),
@@ -94,7 +77,7 @@ public class Api {
 								movie.isEmpty() ? serie.get(0) : movie.get(0),
 								String.valueOf(fs.getInt("rank")),
 								image,
-								year
+								year.isEmpty() ? "0000" : year
 							); // on crée le nouveau media
 						
 						if (fs.has("image") && !fs.isNull("image")) // il faut une image pour que le media soit ajouter
@@ -116,12 +99,11 @@ public class Api {
 	}
 	
 
-
-	private List<String> getMoreData_Movie(String query) throws IOException, InterruptedException {
+	private List<String> getMoreData_Movie(String query){
 		List<String> res = new ArrayList<>();
 		// res[0] type et res[1} plot
 		String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
-		String url = String.format("https://xmdbapi.com/api/v1/movies/%s?apiKey=%s", encodedQuery, api_key);
+		String url = String.format("https://xmdbapi.com/api/v1/movies/%s?apiKey=%s", encodedQuery, Settings.getInstance().getApiKey());
 		try (HttpClient client = HttpClient.newHttpClient()) // on crée un client http
 		{
 			HttpRequest request = HttpRequest.newBuilder() // requette http
@@ -133,20 +115,22 @@ public class Api {
 
 			JSONObject bodypars = new JSONObject(body);
 
-			String type = bodypars.getString("title_type");
+			String type = bodypars.optString("title_type", "not found");
 			res.add(type);
-			String plot = bodypars.getString("plot");
+			String plot = bodypars.optString("plot", "not found");
 			res.add(plot);
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			return res;
 		}
-
 		return res;
 	}
 
-	private List<String> getMoreData_Serie(String query) throws IOException, InterruptedException {
+	private List<String> getMoreData_Serie(String query) {
 		List<String> res = new ArrayList<>();
 
 		String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
-		String url = String.format("https://xmdbapi.com/api/v1/seasons/%s?apiKey=%s", encodedQuery, api_key);
+		String url = String.format("https://xmdbapi.com/api/v1/seasons/%s?apiKey=%s", encodedQuery, Settings.getInstance().getApiKey());
 		try (HttpClient client = HttpClient.newHttpClient()) // on crée un client http
 		{
 			HttpRequest request = HttpRequest.newBuilder() // requette http
@@ -158,10 +142,13 @@ public class Api {
 
 			JSONObject bodypars = new JSONObject(body);
 
-			String type = bodypars.getString("type");
+			String type = bodypars.optString("type", "not found");
 			res.add(type);
-			String plot = "";
+			String plot = "not found";
 			res.add(plot);
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			return res;
 		}
 
 		return res;

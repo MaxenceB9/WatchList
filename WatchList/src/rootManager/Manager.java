@@ -15,13 +15,19 @@ public class Manager {
 
 	private static final Page PAGE = new Page(); //initialisation de la class Page
 	private static final Modal MODAL = new Modal();
-
+	private static final Theme THEME = new Theme();
+	
+	private static Parent root;
+	
 	private static final PageType DEFAULT = PageType.HOME;
+	private static final ThemeList DEFAULT_THEME = ThemeList.LIGHT;
+	
 	private static final int HEIGHT_PREF = 500;
 	private static final int WIDTH_PREF = 800;
 	
 	private PageType current; // type de la page en coyrs
-
+	private ThemeList currentT;
+	
 	public static void init(Stage primaryStage) { // on initalise le root
         if (instance == null) {
             instance = new Manager(primaryStage);
@@ -32,6 +38,10 @@ public class Manager {
 	{
 		stage = pr;
 		setPage(DEFAULT);
+		if(root != null)
+		{
+			setTheme(DEFAULT_THEME);
+		}
 	}
 	
 	public void setPage(PageType PT) // changement de page
@@ -42,7 +52,7 @@ public class Manager {
                 throw new IllegalArgumentException("Page inconnue: " + PT); // la page voulu n'existe pas
             }
             
-            Parent root = FXMLLoader.load(Manager.class.getResource(PATH)); // on itilisalise le rot
+            root = FXMLLoader.load(Manager.class.getResource(PATH)); // on itilisalise le rot
             
             stage.setResizable(false);
         	
@@ -64,7 +74,7 @@ public class Manager {
             e.printStackTrace();
         }
     }
-	
+
 	public void openModal(ModalType MT, String title) throws IOException
 	{
 		try {
@@ -72,7 +82,7 @@ public class Manager {
 	        if (PATH == null) {
 	            throw new IllegalArgumentException("modal inconnue: " + MT);
 	        }
-	        Parent root = FXMLLoader.load(Manager.class.getResource(PATH));
+	        root = FXMLLoader.load(Manager.class.getResource(PATH));
 	        modalStage = new Stage();
 	        modalStage.setTitle(title);
 	        
@@ -90,6 +100,16 @@ public class Manager {
 	{
 		modalStage.close();
 	}
+	
+	
+	public void setTheme(ThemeList th)
+	{
+		this.currentT = th;
+		
+		root.setStyle(THEME.getTheme(th));
+	}
+	
+	
 	public static Manager getInstance() {
         return instance;
     }

@@ -14,8 +14,9 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import api.Api;
-import api.Media;
-import api.MediaList;
+import data.Media;
+import data.MediaList;
+import data.Settings;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
@@ -41,14 +42,13 @@ public class HomeControl {
 			FlowPane.setPrefWrapLength(750);
 			
 			afficher(MediaList.getInstance().getMyMedia());
-			
-			separateMedia();
+			MediaList.getInstance().separateMedia();
 		}
 		
 		
 		public void search() {
 		    String query = searchBar.getText();
-		    if(Api.getInstance().getApi_key() == null || query.isEmpty())
+		    if(Settings.getInstance().getApiKey() == null || query.isEmpty())
 		    {
 		    	try {
 					Manager.getInstance().openModal(ModalType.API_POPUP, "API KEY");
@@ -77,28 +77,6 @@ public class HomeControl {
 		public void openSettings() throws IOException
 		{
 			Manager.getInstance().openModal(ModalType.SETTINGS, "Settings");
-		}
-		
-		
-		
-		private void separateMedia() //trier les media entre Film et Serie
-		{
-			List<Media> med = MediaList.getInstance().getMyMedia();
-			
-			if(!med.isEmpty() || med == null)
-			{
-				for(Media m : med)
-				{
-					if(m.getType().equals("Movie"))
-					{
-						MediaList.getInstance().setMovieMedia(m);
-					}
-					else
-					{
-						MediaList.getInstance().setTvMedia(m);
-					}
-				}
-			}
 		}
 		
 		
@@ -136,12 +114,9 @@ public class HomeControl {
 			{
 				return;
 			}
-			if(movie.isEmpty() || movie.equals(null))
-			{
-				separateMedia();
-			}
 			afficher(movie);
 		}
+		
 		public void showSerie()
 		{
 			List<Media> serie = MediaList.getInstance().getTvMedia();
@@ -149,11 +124,6 @@ public class HomeControl {
 			{
 				return;
 			}
-			if(serie.isEmpty() || serie.equals(null))
-			{
-				separateMedia();
-			}
-			
 			afficher(serie);
 		}
 }

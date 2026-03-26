@@ -1,4 +1,4 @@
-package api;
+package data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +15,8 @@ public class MediaList {
 	private List<Media> myMedia = new ArrayList<Media>();
 	private List<Media> tvMedia = new ArrayList<Media>();
 	private List<Media> movieMedia = new ArrayList<Media>();
+	private List<Media> temp = new ArrayList<Media>();
+	
 	
 	public static void init()
 	{
@@ -86,6 +88,39 @@ public class MediaList {
 	}
 	
 	
+	
+	public List<Media> getTempMedia() {
+		return temp;
+	}
+
+	public void setTempMedia(List<Media> temp) {
+		this.temp = temp;
+	}
+	
+
+	public void separateMedia() //trier les media entre Film et Serie
+	{
+		List<Media> med = myMedia;
+		
+		
+		if(!med.isEmpty() || med != null)
+		{
+			this.movieMedia.clear();
+			this.tvMedia.clear();
+			
+			for(Media m : med)
+			{
+				if(m.getType().equals("Movie"))
+				{
+					MediaList.getInstance().setMovieMedia(m);
+				}
+				else
+				{
+					MediaList.getInstance().setTvMedia(m);
+				}
+			}
+		}
+	}
 	
 	
 	

@@ -1,6 +1,8 @@
 package model;
 
-import api.Media;
+import java.io.File;
+
+import data.Media;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,7 +32,7 @@ public class Preview extends VBox{
 		
 		ImageView image = new ImageView();
 		try {
-			image.setImage(new Image(this.PosterUri, true));
+			image.setImage(new Image(this.PosterUri.contains("http") ? this.PosterUri : new File(this.PosterUri).toURI().toString(), true));			
 			image.setFitWidth(width);
 			image.setFitHeight(height);
 			image.setPreserveRatio(true);
