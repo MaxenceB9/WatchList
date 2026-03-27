@@ -20,7 +20,6 @@ import data.Settings;
 
 public class Api {
 	private static Api instance;
-	private int RateLimit = 5;
 
 	public static void init() {
 		instance = new Api();
@@ -32,7 +31,7 @@ public class Api {
 
 			String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
 			String url = String.format("https://xmdbapi.com/api/v1/search?q=%s&limit=%d&apiKey=%s", encodedQuery,
-					this.RateLimit, Settings.getInstance().getApiKey());
+						Settings.getInstance().getApiRateLimit(), Settings.getInstance().getApiKey());
 
 			try (HttpClient client = HttpClient.newHttpClient()) // on crée un client http
 			{
@@ -152,14 +151,6 @@ public class Api {
 		}
 
 		return res;
-	}
-
-	public int getRateLimit() {
-		return RateLimit;
-	}
-
-	public void setRateLimit(int rateLimit) {
-		RateLimit = rateLimit >= 5 ? RateLimit : 5;
 	}
 
 	public static Api getInstance() {

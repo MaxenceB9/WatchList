@@ -18,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -44,6 +45,11 @@ public class SETTINGSpopupControl {
 	private CheckBox savePoster;
 	
 	@FXML
+	private Slider RateSlider;
+	@FXML
+	private Label RateLabel;
+	
+	@FXML
 	public void initialize()
 	{
 		langSelecter.setText(Settings.getInstance().getLang());
@@ -51,6 +57,7 @@ public class SETTINGSpopupControl {
 		savePoster.setSelected(Settings.getInstance().isSavePoster());
 		
 		loadLanguageSelecter();
+		loadRateSelecter();
 	}
 	
 	private void loadLanguageSelecter()
@@ -71,6 +78,19 @@ public class SETTINGSpopupControl {
 			}
 		}
 	}
+	
+	private void loadRateSelecter()
+	{
+		RateSlider.valueProperty().setValue((double) Settings.getInstance().getApiRateLimit());
+		RateLabel.setText("Rate value: " + (int) RateSlider.getValue());
+		RateSlider.setMax(Settings.getInstance().getMaxApiRate());
+		RateSlider.valueProperty().addListener((observable, oldValue, newValue) ->{
+			int value = newValue.intValue();
+			RateLabel.setText("Rate value: " + value);
+			Settings.getInstance().setApiRateLimit(value);
+		});
+	}
+	
 	@FXML
 	public void ApiContent()
 	{
@@ -91,9 +111,9 @@ public class SETTINGSpopupControl {
 	{
 		Map<String, String> data = new HashMap<>();
 		data.put("ApiKey", Settings.getInstance().getApiKey());
+		data.put("ApiRate", String.valueOf(Settings.getInstance().getApiRateLimit()));
 		data.put("Lang", langSelecter.getText());
 		data.put("SavePoster", String.format("%s", Settings.getInstance().isSavePoster()));
-
 		FileManager.getInstance().saveFile(data, "settings");
 	}
 	

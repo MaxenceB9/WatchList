@@ -9,6 +9,8 @@ public class Settings {
 	private String Lang;
 	private String ApiKey;
 	private boolean SavePoster = false;
+	private int ApiRate = 5;
+	private int MaxApiRate = 20;
 	
 	public static void init()
 	{
@@ -53,6 +55,29 @@ public class Settings {
 
 	public void setSavePoster(boolean savePoster) {
 		SavePoster = savePoster;
+	}
+
+	public int getApiRateLimit() {
+		return this.ApiRate;
+	}
+
+	public void setApiRateLimit(int rateLimit) {
+		if(rateLimit >= 5 && rateLimit <= 20)
+		{
+			this.ApiRate = rateLimit;
+		}
+		else if(rateLimit < 5)
+		{
+			this.ApiRate = 5;
+		}
+		else if(rateLimit > getMaxApiRate())
+		{
+			rateLimit = getMaxApiRate();
+		}
+	}
+	
+	public int getMaxApiRate() {
+		return MaxApiRate;
 	}
 
 	public static Settings getInstance()

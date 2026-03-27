@@ -31,6 +31,7 @@ public class APIpopupControl {
 	{
 		Map<String, String> data = new HashMap<>();
 		data.put("ApiKey", input.getText());
+		data.put("ApiRate", String.format("%d", Settings.getInstance().getApiRateLimit()));
 		data.put("Lang", Settings.getInstance().getLang());
 		data.put("SavePoster", String.format("%s", Settings.getInstance().isSavePoster()));
 

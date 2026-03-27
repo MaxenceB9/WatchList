@@ -25,7 +25,7 @@ public class Manager {
 	private static final int HEIGHT_PREF = 500;
 	private static final int WIDTH_PREF = 800;
 	
-	private PageType current; // type de la page en coyrs
+	private PageType current; // type de la page en cours
 	private ThemeList currentT;
 	
 	public static void init(Stage primaryStage) { // on initalise le root
