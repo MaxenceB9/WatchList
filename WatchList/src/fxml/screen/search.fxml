@@ -28,7 +28,7 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="600.0" VBox.vgrow="ALWAYS" spacing="10.0">
                <children>
                   <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" text="&lt;" />
                   <Region prefHeight="38.0" prefWidth="74.0" HBox.hgrow="ALWAYS" />

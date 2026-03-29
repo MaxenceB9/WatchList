@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -12,14 +13,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.page.HomeControl">
+<BorderPane fx:id="back" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.page.HomeControl">
    <left>
       <VBox prefHeight="378.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#showAll" text="All media" />
-            <Button mnemonicParsing="false" onAction="#showSerie" text="My series" />
-            <Button mnemonicParsing="false" onAction="#showMovie" text="My movie" />
+            <Button fx:id="button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showAll" prefHeight="20.0" prefWidth="80.0" text="All media" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="4.75" top="4.75" />
+               </VBox.margin></Button>
+            <Button fx:id="button" mnemonicParsing="false" onAction="#showSerie" prefHeight="20.0" prefWidth="80.0" text="My series">
+               <VBox.margin>
+                  <Insets bottom="4.75" top="4.75" />
+               </VBox.margin></Button>
+            <Button fx:id="button" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showMovie" prefHeight="20.0" prefWidth="80.0" text="My movie" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="4.75" top="4.75" />
+               </VBox.margin></Button>
          </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </VBox>
    </left>
    <top>
@@ -36,7 +49,7 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="290.0" />
                   <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="30.0" prefWidth="78.0" text="search" />

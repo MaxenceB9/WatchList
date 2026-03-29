@@ -47,6 +47,7 @@ public class FileManager {
 				Settings.getInstance().setApiKey(data.get("ApiKey"));
 				Settings.getInstance().setApiRateLimit(Integer.parseInt(data.get("ApiRate")));
 				Settings.getInstance().setLang(data.get("Lang"));
+				Settings.getInstance().setTheme(data.get("Theme"));
 				Settings.getInstance().setSavePoster(data.get("SavePoster") == "false" ? false : true);
 				break;
 			case "myMedia":

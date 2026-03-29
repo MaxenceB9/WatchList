@@ -8,6 +8,7 @@ public class Settings {
 	private final String LANGDEFAULT = langList[0];
 	private String Lang;
 	private String ApiKey;
+	private String theme = "LIGHT";
 	private boolean SavePoster = false;
 	private int ApiRate = 5;
 	private int MaxApiRate = 20;
@@ -78,6 +79,16 @@ public class Settings {
 	
 	public int getMaxApiRate() {
 		return MaxApiRate;
+	}
+
+	
+	
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 	public static Settings getInstance()

@@ -33,6 +33,7 @@ public class APIpopupControl {
 		data.put("ApiKey", input.getText());
 		data.put("ApiRate", String.format("%d", Settings.getInstance().getApiRateLimit()));
 		data.put("Lang", Settings.getInstance().getLang());
+		data.put("Theme", Settings.getInstance().getTheme());
 		data.put("SavePoster", String.format("%s", Settings.getInstance().isSavePoster()));
 
 		Settings.getInstance().setApiKey(input.getText());

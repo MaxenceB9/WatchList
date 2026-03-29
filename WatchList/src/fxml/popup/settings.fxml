@@ -28,9 +28,9 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
          <content>
-            <FlowPane fx:id="content" alignment="TOP_CENTER" columnHalignment="CENTER">
+            <FlowPane fx:id="content" alignment="CENTER" columnHalignment="CENTER" rowValignment="TOP">
                <children>
-                  <VBox prefHeight="58.0" prefWidth="167.0">
+                  <VBox prefHeight="58.0" prefWidth="142.0">
                      <children>
                         <Label text="Language">
                            <font>
@@ -68,9 +68,9 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <MenuButton fx:id="themeSelecter" mnemonicParsing="false" text="No theme select" />
                      </children>
                   </VBox>
-                  <Region prefHeight="27.0" prefWidth="12.0" />
                   <VBox prefHeight="137.0" prefWidth="100.0">
                      <children>
                         <Label text="Api">

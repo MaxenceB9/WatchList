@@ -25,10 +25,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import rootManager.Manager;
 import rootManager.ModalType;
+import rootManager.Theme;
+import rootManager.ThemeList;
 
 public class SETTINGSpopupControl {
 
-	
 	@FXML
 	private FlowPane content;
 	
@@ -39,7 +40,7 @@ public class SETTINGSpopupControl {
 	private String languageSelected;
 	
 	@FXML
-	private MenuButton langSelecter;
+	private MenuButton langSelecter, themeSelecter;
 
 	@FXML
 	private CheckBox savePoster;
@@ -53,10 +54,12 @@ public class SETTINGSpopupControl {
 	public void initialize()
 	{
 		langSelecter.setText(Settings.getInstance().getLang());
-
+		themeSelecter.setText(Settings.getInstance().getTheme());
+		
 		savePoster.setSelected(Settings.getInstance().isSavePoster());
 		
 		loadLanguageSelecter();
+		loadThemeSelecter();
 		loadRateSelecter();
 	}
 	
@@ -67,7 +70,7 @@ public class SETTINGSpopupControl {
 		{
 			if(!l.equals(langSelecter.getText()))
 			{
-				MenuItem it = new MenuItem(l);
+				MenuItem it = new MenuItem(l.toLowerCase());
 				it.setOnAction(event ->{
 					String selected = it.getText();
 					languageSelected = selected;
@@ -77,6 +80,20 @@ public class SETTINGSpopupControl {
 				langSelecter.getItems().add(it);
 			}
 		}
+	}
+	private void loadThemeSelecter() {
+		themeSelecter.getItems().clear();
+	    for (ThemeList t : ThemeList.values()) {
+	        if (!t.name().equalsIgnoreCase(themeSelecter.getText())) {       
+	            MenuItem it = new MenuItem(t.name());  
+	            it.setOnAction(event -> {
+	            	themeSelecter.setText(it.getText().toUpperCase());
+	                loadThemeSelecter();
+	            });
+	            
+	            themeSelecter.getItems().add(it);
+	        }
+	    }
 	}
 	
 	private void loadRateSelecter()
@@ -113,6 +130,15 @@ public class SETTINGSpopupControl {
 		data.put("ApiKey", Settings.getInstance().getApiKey());
 		data.put("ApiRate", String.valueOf(Settings.getInstance().getApiRateLimit()));
 		data.put("Lang", langSelecter.getText());
+		data.put("Theme", themeSelecter.getText());
+		for (ThemeList t : ThemeList.values()) {
+	        if(t.name().equalsIgnoreCase(themeSelecter.getText()))
+	        {
+	        	Manager.getInstance().setTheme(t);
+	        	break;
+	        }
+	    }
+		
 		data.put("SavePoster", String.format("%s", Settings.getInstance().isSavePoster()));
 		FileManager.getInstance().saveFile(data, "settings");
 	}

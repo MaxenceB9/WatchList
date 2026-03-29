@@ -2,6 +2,7 @@ package rootManager;
 
 import java.io.IOException;
 
+import data.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,7 +21,6 @@ public class Manager {
 	private static Parent root;
 	
 	private static final PageType DEFAULT = PageType.HOME;
-	private static final ThemeList DEFAULT_THEME = ThemeList.LIGHT;
 	
 	private static final int HEIGHT_PREF = 500;
 	private static final int WIDTH_PREF = 800;
@@ -38,10 +38,6 @@ public class Manager {
 	{
 		stage = pr;
 		setPage(DEFAULT);
-		if(root != null)
-		{
-			setTheme(DEFAULT_THEME);
-		}
 	}
 	
 	public void setPage(PageType PT) // changement de page
@@ -53,7 +49,18 @@ public class Manager {
             }
             
             root = FXMLLoader.load(Manager.class.getResource(PATH)); // on itilisalise le rot
-            
+    		if(root != null)
+    		{
+    			for (ThemeList t : ThemeList.values())
+    			{
+    				if(t.name().equalsIgnoreCase(Settings.getInstance().getTheme()))
+    				{
+    					setTheme(t);
+    					break;
+    				}
+    			}
+    		}
+    		
             stage.setResizable(false);
         	
             if (stage.getScene() == null) { // si null cela veut dire que la scene n'existe pas
@@ -106,7 +113,8 @@ public class Manager {
 	{
 		this.currentT = th;
 		
-		root.setStyle(THEME.getTheme(th));
+		root.getStylesheets().clear();
+		root.getStylesheets().setAll(getClass().getResource(THEME.getTheme(th)).toExternalForm());
 	}
 	
 	

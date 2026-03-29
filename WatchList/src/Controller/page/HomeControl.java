@@ -19,11 +19,14 @@ import data.MediaList;
 import data.Settings;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import model.Preview;
 
 public class HomeControl {
-		
+	
+		@FXML
+		private BorderPane back;
 		@FXML 
 		private FlowPane FlowPane;
 		
@@ -32,7 +35,7 @@ public class HomeControl {
 		
 		@FXML
 		private Button searchButton;
-		
+
 		@FXML
 		private MenuItem settings;
 		
@@ -48,7 +51,7 @@ public class HomeControl {
 		
 		public void search() {
 		    String query = searchBar.getText();
-		    if(Settings.getInstance().getApiKey() == null || query.isEmpty())
+		    if(Settings.getInstance().getApiKey() == null)
 		    {
 		    	try {
 					Manager.getInstance().openModal(ModalType.API_POPUP, "API KEY");
