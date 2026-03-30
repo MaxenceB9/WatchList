@@ -1,4 +1,4 @@
-package controller.popup;
+package Controller.popup;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package controller.page;
+package Controller.page;
 
 import java.io.IOException;
 import java.util.List;

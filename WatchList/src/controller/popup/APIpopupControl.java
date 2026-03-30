@@ -1,4 +1,4 @@
-package controller.popup;
+package Controller.popup;
 
 import javafx.scene.control.TextField;
 import rootManager.Manager;
