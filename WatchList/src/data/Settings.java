@@ -3,7 +3,7 @@ package data;
 public class Settings {
 	private static Settings instance;
 	
-	private String langList[] = {"English", "French"};
+	private String langList[] = {"English"};
 	
 	private final String LANGDEFAULT = langList[0];
 	private String Lang;

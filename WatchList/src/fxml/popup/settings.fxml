@@ -63,7 +63,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </FlowPane.margin>
                      <children>
-                        <Label text="Thème">
+                        <Label text="Theme">
                            <font>
                               <Font size="14.0" />
                            </font>

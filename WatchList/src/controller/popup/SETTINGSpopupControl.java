@@ -130,8 +130,9 @@ public class SETTINGSpopupControl {
 		data.put("ApiKey", Settings.getInstance().getApiKey());
 		data.put("ApiRate", String.valueOf(Settings.getInstance().getApiRateLimit()));
 		data.put("Lang", langSelecter.getText());
+		//appliquer la nouvel langue.
 		data.put("Theme", themeSelecter.getText());
-		for (ThemeList t : ThemeList.values()) {
+		for (ThemeList t : ThemeList.values()) { //appliquer le nouveau theme à la sauvegarde.
 	        if(t.name().equalsIgnoreCase(themeSelecter.getText()))
 	        {
 	        	Manager.getInstance().setTheme(t);
