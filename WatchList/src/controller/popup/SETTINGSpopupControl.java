@@ -70,11 +70,10 @@ public class SETTINGSpopupControl {
 		{
 			if(!l.equals(langSelecter.getText()))
 			{
-				MenuItem it = new MenuItem(l.toLowerCase());
+				MenuItem it = new MenuItem(l);
 				it.setOnAction(event ->{
-					String selected = it.getText();
-					languageSelected = selected;
-					langSelecter.setText(selected);
+					languageSelected = it.getText();
+					langSelecter.setText(it.getText());
 					loadLanguageSelecter();
 				});
 				langSelecter.getItems().add(it);

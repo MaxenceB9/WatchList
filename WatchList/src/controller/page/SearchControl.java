@@ -104,3 +104,4 @@ public class SearchControl {
 		Manager.getInstance().setPage(PageType.HOME);
 	}
 }
+
